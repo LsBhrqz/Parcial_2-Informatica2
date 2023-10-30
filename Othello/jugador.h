@@ -2,8 +2,8 @@
 #define JUGADOR_H
 
 
-class jugador
-{
+class jugador{
+
 public:
     jugador();
 };
