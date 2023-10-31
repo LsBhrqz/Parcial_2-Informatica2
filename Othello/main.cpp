@@ -4,6 +4,6 @@ using namespace std;
 
 int main()
 {
-    bool respuesta= menu();
 
+    return 0;
 }

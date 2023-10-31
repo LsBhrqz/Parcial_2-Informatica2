@@ -13,6 +13,13 @@ tablero::tablero()
         }
     }
 
+    matriz[4][4]='O'; matriz[5][5]='O';
+    matriz[4][5]= 'X'; matriz[5][4]= 'X';
+
+
+}
+
+tablero::~tablero(){
     for(int i=0; i<8;i++){
         delete matriz[i];
     }

@@ -10,7 +10,7 @@ public:
     tablero();
     ActualizarTablero();
     EstadoTablero();
-
+    ~tablero();
 };
 
 #endif // TABLERO_H
