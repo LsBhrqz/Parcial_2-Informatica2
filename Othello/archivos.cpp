@@ -1,9 +1,4 @@
-#ifndef HEADER_H
-#define HEADER_H
-#include <iostream>
-#include <fstream>
-
-using namespace std;
+#include "archivos.h"
 
 void ImprimirNombre(string nombre_archivo){
     /* Esta funcion recibo el nombre de un archivo e imprime linea por linea lo que hay en él de color amarillo
@@ -21,7 +16,7 @@ void ImprimirNombre(string nombre_archivo){
         // Imprima lo que lee de color amarillo en la consola
         cout << YELLOW << linea << endl;
     }
-    //cout<<RESET;
+    cout<<RESET;
 }
 
 bool comprobarLectura( string nombredelarchivo){
@@ -41,7 +36,7 @@ bool comprobarLectura( string nombredelarchivo){
 }
 
 void CambiarNombreArchivo(string& nombre_archivo){
- /* Aun no estoy segura si se va a usar
+/* Aun no estoy segura si se va a usar
 */
     cout<<"Ingrese el nombre del nuevo archivo: ";
     string nombre_nuevo_archivo; cin>> nombre_nuevo_archivo;
@@ -92,8 +87,8 @@ bool intro(string& othello){
     return bandera_titulo;
 }
 
-bool menu() {
-    #define GREEN   "\033[32m"
+bool menu(){
+#define GREEN   "\033[32m"
     string othello= "Othelo.txt";
     bool bandera_titulo = intro(othello);
     int eleccion_menu=0;
@@ -133,4 +128,3 @@ bool menu() {
     }
 }
 
-#endif // HEADER_H

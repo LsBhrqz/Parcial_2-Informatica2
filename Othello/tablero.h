@@ -1,6 +1,6 @@
 #ifndef TABLERO_H
 #define TABLERO_H
-
+#include "archivos.h"
 
 class tablero{
 private:
@@ -8,8 +8,10 @@ private:
     char** matriz= new char*[8];
 public:
     tablero();
-    ActualizarTablero();
-    EstadoTablero();
+    void ActualizarTablero();
+    bool EstadoTablero();
+    void imprimirTablero();
+    int ContarFichas();
     ~tablero();
 };
 
