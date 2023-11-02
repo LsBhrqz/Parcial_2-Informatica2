@@ -2,4 +2,11 @@
 2. Funcion que verifique si hay posibles movimientos
 	Recorre toda la matriz y revisa si hay al menos un espacio donde se pueda hacer un movimiento válido
 3. Función que cambie las fichas (Actualizar tablero)
-4. Verificar si la casilla está vacía
+4. Verificar si la casilla está vacía (solo es un if)
+
+
+
+1. agregar el prototipo de las funciones
+2. Hacer toda la secuencia y comentar lo que sea necesario
+3. Terminar las validaciones e incluirlas
+4. Colocarle los colores
