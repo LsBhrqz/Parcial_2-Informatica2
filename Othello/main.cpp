@@ -11,12 +11,12 @@ int main()
     string TituloArchivo= "Othello";
     bool ban_inicio= intro(TituloArchivo);
     bool validar_jugar=false;
-    if(ban_inicio){
+    while(ban_inicio){
         validar_jugar=menu();
         if(validar_jugar){
-            juego();
+            ban_inicio=juego();
         }else{
-            ban_inicio;
+            ban_inicio= false;;
         }
     }
 

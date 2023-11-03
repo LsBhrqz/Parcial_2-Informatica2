@@ -16,11 +16,6 @@ std::string jugador::getNombre() const
     return nombre;
 }
 
-void jugador::setNombre(const string &newNombre)
-{
-    nombre = newNombre;
-}
-
 jugador::jugador()
 {
     cout<<"Ingrese su nombre: "; cin>> nombre;

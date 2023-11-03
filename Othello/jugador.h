@@ -14,7 +14,6 @@ public:
     char getFicha() const;
 
     string getNombre() const;
-    void setNombre(const string &newNombre);
 };
 
 #endif // JUGADOR_H

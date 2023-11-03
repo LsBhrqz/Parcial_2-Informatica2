@@ -199,3 +199,16 @@ void GuardarPartida(string nombre_jugador, int num_fichas){
     }
     return ban;
 }
+
+void GuardarPartida(int num_fichas){
+    string historial= "Historial.txt";
+    bool ban=VerficarArchivo(historial);
+    if(ban){
+        ofstream archivo;
+        archivo.open(historial, ios::app);
+        archivo<<SacarFechayHora()<<endl;
+        archivo<<"Hubo un empate con "<<num_fichas<< " fichas"<<endl;
+        archivo.close();
+    }
+    return ban;
+}

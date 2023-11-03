@@ -73,6 +73,7 @@ bool juego()
                     int columna= RecibirRespuesta("columna");
                     Tablero.MovimientoValido(fila, columna, jugadorX.getFicha());
                     Tablero.ActualizarTablero(fila, columna, jugadorX.getFicha());
+                    Tablero.imprimirTablero();
                 }
             }
             validar_continuacion= Tablero.EstadoTablero();
@@ -85,15 +86,16 @@ bool juego()
                         int columna= RecibirRespuesta("columna");
                         Tablero.MovimientoValido(fila, columna, jugadorO.getFicha());
                         Tablero.ActualizarTablero(fila, columna, jugadorO.getFicha());
+                        Tablero.imprimirTablero();
                     }
                 }
                 validar_continuacion= Tablero.EstadoTablero();
             }
         }
     }
-    Tablero.ContarFichas();
-    if(Tablero.GetPuntacion(0)< Tablero.GetPuntacion(1)){
-        //GuardarPartida();
-    }
+    Tablero.Resultado(jugadorX.getNombre(), jugadorO.getNombre());
+    //Tablero.ContarFichas(); Esta función se debe estra llamando en la partida para que se vea
+    //quién está ganando o perdiendo
+
     return false;
 }

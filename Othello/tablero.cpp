@@ -185,13 +185,14 @@ bool tablero::EstadoTablero(){
     return false;
 }
 
-void tablero::Movimiento(char ficha, tablero Tablero)
+void tablero::Movimiento(char ficha)
 {
     //Funcion que no está implementada y todavía no estoy segura de si la voy a usar
     int fila= RecibirRespuesta("fila");
     int columna= RecibirRespuesta("columna");
-    Tablero.MovimientoValido(fila, columna, ficha);
-    Tablero.ActualizarTablero(fila, columna, ficha);
+    MovimientoValido(fila, columna, ficha);
+    ActualizarTablero(fila, columna, ficha);
+    imprimirTablero();
 }
 
 int tablero::ContarFichas(){
@@ -214,14 +215,19 @@ void tablero::Resultado(string jugadorX, string jugadorO){
 
     if(puntacion[0]>puntacion[1]){
         cout<<"Felicidades" << jugadorX<<"! GANASTE!"<<endl;
+        GuardarPartida(jugadorX, puntacion[0]);
     }else if(puntacion[0]< puntacion[1]){
         cout<<"Felicidades"<<jugadorO<<"! GANASTE!"<<endl;
+        GuardarPartida(jugadorO, puntacion[1]);
     }else{
         cout<<"EMPATE!"<<endl;
+        GuardarPartida(puntacion[0]);
     }
     cout<<"Puntacion: "<<endl;
     cout<<"X:" <<puntacion[0]<<endl;
     cout<<"0: "<<puntacion[1]<<endl;
+
+
     //Esta funcion llama a contar fichas e imprime quién ganó y la cantidad de fichas
     //que tuvo cada uno
 }
