@@ -3,7 +3,8 @@
 #include "jugador.h"
 
 using namespace std;
-bool esNumero(string str){
+bool esNumero(string str)
+{
     for(char c : str){
         if((c < '1') || (c > '8')){
             return false;
@@ -12,7 +13,8 @@ bool esNumero(string str){
     return true;
 }
 
-int RecibirRespuesta(string dato){
+int RecibirRespuesta(string dato)
+{
     string entrada;
     bool entradaValida = false;
     int numero = 0;
@@ -42,36 +44,56 @@ int RecibirRespuesta(string dato){
     return numero;
 }
 
-bool juego(){
+bool juego()
+{
 
     tablero Tablero;
     cout<<"Jugador con las X's"<<endl;
     jugador jugadorX;
+    jugadorX.setFicha('X');
     cout << "Jugador con las O's"<<endl;
     jugador jugadorO;
+    jugadorO.setFicha('O');
     bool validar_continuacion=true;
-    bool turnoX=false;
-    bool turnoO=true;
+    bool posible_movimientoX=false;
+    bool posible_movimientoO=false;
     while(validar_continuacion){
         validar_continuacion= Tablero.EstadoTablero();
-        if(validar_continuacion){
-            while(turnoX){
-                turnoO=true;
-                turnoX=false;
-                //Pirmero verifico si el jugador tiene algun movimiento posible
-            }
-        }
-        validar_continuacion= Tablero.EstadoTablero();
-        if(validar_continuacion){
-            while(turnoO){
-
+        posible_movimientoX= Tablero.PosibleMovimiento(jugadorX.getFicha());
+        posible_movimientoO= Tablero.PosibleMovimiento(jugadorO.getFicha());
+        if(posible_movimientoO==false && posible_movimientoX==false){
+            cout<<"Ninguno de los jugadores tiene posibles movimientos"<<endl;
+            validar_continuacion=false;
+        }else if(validar_continuacion){
+            if(!posible_movimientoX){
+                cout<<"No tienes posibles movimientos"<<endl;
+            }else{
+                while(posible_movimientoX){
+                    int fila= RecibirRespuesta("fila");
+                    int columna= RecibirRespuesta("columna");
+                    Tablero.MovimientoValido(fila, columna, jugadorX.getFicha());
+                    Tablero.ActualizarTablero(fila, columna, jugadorX.getFicha());
+                }
             }
             validar_continuacion= Tablero.EstadoTablero();
+            if(validar_continuacion){
+                if(!posible_movimientoO){
+                    cout<<"No tienes posibles movimientos"<<endl;
+                }else{
+                    while(posible_movimientoO){
+                        int fila= RecibirRespuesta("fila");
+                        int columna= RecibirRespuesta("columna");
+                        Tablero.MovimientoValido(fila, columna, jugadorO.getFicha());
+                        Tablero.ActualizarTablero(fila, columna, jugadorO.getFicha());
+                    }
+                }
+                validar_continuacion= Tablero.EstadoTablero();
+            }
         }
-
     }
-
-
-
+    Tablero.ContarFichas();
+    if(Tablero.GetPuntacion(0)< Tablero.GetPuntacion(1)){
+        //GuardarPartida();
+    }
     return false;
 }

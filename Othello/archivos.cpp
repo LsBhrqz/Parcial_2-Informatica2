@@ -1,6 +1,8 @@
 #include "archivos.h"
+#include <ctime>
 
-void ImprimirNombre(string nombre_archivo){
+void ImprimirNombre(string nombre_archivo)
+{
     /* Esta funcion recibo el nombre de un archivo e imprime linea por linea lo que hay en él de color amarillo
  * Parametros: archivo : string
  * Retorna: void;
@@ -19,7 +21,8 @@ void ImprimirNombre(string nombre_archivo){
     cout<<RESET;
 }
 
-bool comprobarLectura( string nombredelarchivo){
+bool comprobarLectura( string nombredelarchivo)
+{
     /* Verifica si el archivo existe en caso de que lo haga retorna true y si no lo hace retorna false
  * Parametros: nombredelarchivo:string
  * Retorna: true or false: bool
@@ -35,7 +38,8 @@ bool comprobarLectura( string nombredelarchivo){
     }
 }
 
-void CambiarNombreArchivo(string& nombre_archivo){
+void CambiarNombreArchivo(string& nombre_archivo)
+{
 /* Aun no estoy segura si se va a usar
 */
     cout<<"Ingrese el nombre del nuevo archivo: ";
@@ -44,7 +48,8 @@ void CambiarNombreArchivo(string& nombre_archivo){
     nombre_archivo= nombre_nuevo_archivo;
 }
 
-bool RespuestaValida(string respuesta){
+bool RespuestaValida(string respuesta)
+{
     if(respuesta.length()>1){
         cout<<"Solo puede ingresar una letra (s/n)"<<endl;
         return false;
@@ -58,7 +63,8 @@ bool RespuestaValida(string respuesta){
     }
 }
 
-bool intro(string& othello){
+bool intro(string& othello)
+{
     bool bandera_titulo= false;
     bool ban=true;
     string respuesta="";
@@ -87,7 +93,8 @@ bool intro(string& othello){
     return bandera_titulo;
 }
 
-bool menu(){
+bool menu()
+{
 #define GREEN   "\033[32m"
     string othello= "Othelo.txt";
     bool bandera_titulo = intro(othello);
@@ -128,3 +135,67 @@ bool menu(){
     }
 }
 
+string SacarFechayHora(){
+    // Obtener el tiempo actual en segundos desde el Epoch (1 de enero de 1970)
+    time_t tiempo = time(&tiempo);
+
+    // Convertir el tiempo a una estructura tm para obtener la hora y fecha
+    tm* fecha_hora = localtime(&tiempo);
+
+    string fechayhora= "Fecha y hora: ";
+    fechayhora+= to_string(fecha_hora->tm_year +1900) +"-";
+    fechayhora+= to_string(fecha_hora->tm_mon + 1)+"-" + to_string(fecha_hora->tm_mday)+" ";
+    fechayhora+= to_string(fecha_hora->tm_hour)+":" + to_string(fecha_hora->tm_min)+":";
+    fechayhora+= to_string(fecha_hora->tm_sec);
+
+    return fechayhora;
+}
+
+void CrearArchivoHistorial(string& nombre_archivo){
+    CambiarNombreArchivo(nombre_archivo);
+    ofstream archivo;
+    archivo.open(nombre_archivo);
+    archivo<<"OTHELLO\n"<<endl;
+    archivo.close();
+}
+
+bool VerificarArchivo(string& nombreArchivo){
+    bool bandera_titulo= false;
+    bool ban=true;
+    string respuesta="";
+    while(ban){
+        bandera_titulo= comprobarLectura(nombreArchivo);
+        if(bandera_titulo){
+            ban=false;
+        }else{
+            bool controlban= true;
+            while(controlban){
+                cout<<"Desea salir del programa aunque no se guarde la partida? s(si)/n(no): ";
+                cin >> respuesta;
+                bool ban_interna= RespuestaValida(respuesta);
+                if(ban_interna){
+                    if(respuesta=="s"){
+                        return bandera_titulo;
+                    }else{
+                        controlban=false;
+                    }
+                }
+            }
+            CrerArchivoHistorial(nombreArchivo);
+        }
+    }
+    return bandera_titulo;
+}
+
+void GuardarPartida(string nombre_jugador, int num_fichas){
+    string historial= "Historial.txt";
+    bool ban=VerficarArchivo(historial);
+    if(ban){
+        ofstream archivo;
+        archivo.open(historial, ios::app);
+        archivo<<SacarFechayHora()<<endl;
+        archivo<<"El ganador fue "<<nombre_jugador<<" con "<<num_fichas<< " fichas"<<endl;
+        archivo.close();
+    }
+    return ban;
+}

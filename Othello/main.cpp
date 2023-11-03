@@ -23,5 +23,6 @@ int main()
     cout<<"Que lastima que te vayas"<<endl;
     cout<<"Vuelve pronto!"<<endl;
 
+
     return 0;
 }

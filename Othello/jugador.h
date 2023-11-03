@@ -5,12 +5,16 @@
 
 class jugador{
 private:
-    std::string nombre;
+    string nombre;
     char ficha;
 
 public:
     jugador();
     void setFicha(char nueva_ficha);
+    char getFicha() const;
+
+    string getNombre() const;
+    void setNombre(const string &newNombre);
 };
 
 #endif // JUGADOR_H
