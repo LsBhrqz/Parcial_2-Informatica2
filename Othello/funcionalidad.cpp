@@ -13,12 +13,20 @@ bool esNumero(string str)
 
 int RecibirRespuesta(string dato)
 {
+    #define WHITE   "\033[37m"
+    #define GREEN   "\033[32m"
+    #define YELLOW  "\033[33m"
+
     string entrada;
     bool entradaValida = false;
     int numero = 0;
 
     while(!entradaValida){
-        cout << "Ingrese el numero de la "<<dato<<": ";
+        if(dato=="fila"){
+            cout <<WHITE<< "\tIngrese el numero de la "<<GREEN<<dato<<": "<<WHITE;
+        }else{
+            cout <<WHITE<< "\tIngrese el numero de la "<<YELLOW<<dato<<": "<<WHITE;
+        }
         cin >> entrada;
 
         entradaValida = esNumero(entrada);
@@ -35,7 +43,7 @@ int RecibirRespuesta(string dato)
         }
 
         if(!entradaValida){
-            cout << "Entrada inválida. Por favor, ingrese solo numeros entre el 1 y el 8" << endl;
+            cout << "\tEntrada invalida. Por favor, ingrese solo numeros entre el 1 y el 8" << endl;
         }
     }
 
@@ -44,12 +52,16 @@ int RecibirRespuesta(string dato)
 
 bool juego()
 {
+    #define RED     "\033[31m"
+    #define WHITE   "\033[37m"
+    #define BLUE    "\033[34m"
+    #define YELLOW  "\033[33m"
 
     tablero Tablero;
-    cout<<"Jugador con las X's"<<endl;
+    cout<<RED<<"\n\tJugador con las X's"<<endl;
     jugador jugadorX;
     jugadorX.setFicha('X');
-    cout << "Jugador con las O's"<<endl;
+    cout <<BLUE<< "\n\tJugador con las O's"<<endl;
     jugador jugadorO;
     jugadorO.setFicha('O');
     bool validar_continuacion=true;
@@ -62,14 +74,14 @@ bool juego()
         posible_movimientoX= Tablero.PosibleMovimiento(jugadorX.getFicha());
         posible_movimientoO= Tablero.PosibleMovimiento(jugadorO.getFicha());
         if(posible_movimientoO==false && posible_movimientoX==false){
-            cout<<"Ninguno de los jugadores tiene posibles movimientos"<<endl;
+            cout<<"\tNinguno de los jugadores tiene posibles movimientos"<<endl;
             validar_continuacion=false;
         }else if(validar_continuacion){
             if(!posible_movimientoX){
-                cout<<jugadorX.getNombre()<<" no tienes posibles movimientos"<<endl;
+                cout<<RED<<"\n\t"<<jugadorX.getNombre()<<" no tienes posibles movimientos"<<endl;
             }else{
                 while(posible_movimientoX){
-                    cout<<"Turno de "<<jugadorX.getNombre()<<endl;
+                    cout<<RED<<"\n\tTurno de "<<jugadorX.getNombre()<<endl;
                     posible_movimientoX=Tablero.Movimiento(jugadorX.getFicha());
                 }
             }
@@ -77,10 +89,10 @@ bool juego()
             posible_movimientoO= Tablero.PosibleMovimiento(jugadorO.getFicha());
             if(validar_continuacion){
                 if(!posible_movimientoO){
-                    cout<<jugadorO.getNombre()<<" no tienes posibles movimientos"<<endl;
+                    cout<<BLUE<<"\n\t"<<jugadorO.getNombre()<<" no tienes posibles movimientos"<<endl;
                 }else{
                     while(posible_movimientoO){
-                        cout<<"Turno de "<<jugadorO.getNombre()<<endl;
+                        cout<<BLUE<<"\n\tTurno de "<<jugadorO.getNombre()<<endl;
                         posible_movimientoO= Tablero.Movimiento(jugadorO.getFicha());
                     }
                 }
@@ -90,12 +102,16 @@ bool juego()
     }
     Tablero.ContarFichas();
     Tablero.Resultado(jugadorX.getNombre(), jugadorO.getNombre());
-
-    cout<<"Desea jugar de nuevo? s(si)/n(no): ";cin>>validar_continuacion;
-    if(validar_continuacion){
-        return true;
-    }else{
-        return false;
+    while(true){
+        string continuacion;
+        cout<<YELLOW<<"\n\tDesea jugar de nuevo? s(si)/n(no): "<<WHITE;cin>>continuacion;
+        validar_continuacion= RespuestaValida(continuacion);
+        if(validar_continuacion){
+            if(continuacion=="s"){
+                return true;
+            }else{
+                return false;
+            }
+        }
     }
-
 }

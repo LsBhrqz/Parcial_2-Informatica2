@@ -1,59 +1,65 @@
 #include "funcionalidad.h"
 
-
 tablero::tablero()
 {
     //char* puntero_arreglo = new char[8];
 
-    /*for(int i=0; i<8; i++){
+    for(int i=0; i<8; i++){
         matriz[i]= new char[8];
     }
     for(int i=0; i<8; i++){
         for(int j=0; j<8; j++){
             matriz[i][j]= ' ';
         }
-    }*/
-    for(int i=0; i<8;i++){
+    }
+    /*for(int i=0; i<8;i++){
         for(int j=0; j<8; j++){
             matriz[i][j]= ' ';
         }
     }
-
+*/
     matriz[3][3]='O'; matriz[4][4]='O';
     matriz[3][4]= 'X'; matriz[4][3]= 'X';
-
 }
-/*
-char **tablero::getMatriz() const
-{
-    return matriz;
-}*/
 
 void tablero::imprimirTablero()
 {
+    #define RED     "\033[31m"
+    #define WHITE   "\033[37m"
+    #define BLUE    "\033[34m"
+    #define GREEN   "\033[32m"
+    #define YELLOW  "\033[33m"
+
     string margen = "| ";
     string margen2 = " ---";
 
 
-    cout<<"X's: "<<puntacion[0]<<endl;
-    cout<<"O's: "<<puntacion[1]<<endl;
+    cout<<RED<<"\n\t\t   X's: "<<WHITE<<puntacion[0]<<"\t\t"<<BLUE<<"O's: "<<WHITE<<puntacion[1]<<endl;
 
+    cout<<"\n\t\t";
     for(int l=0; l<8; l++){
-        cout << "  " << l +1  << " ";}
-
-    cout << endl;
-
-    for(int i=0; i<8; i++){
-
-        for(int l=0; l<8; l++){
-            cout << margen2;}
-        cout << endl;
-        for(int j=0; j<8; j++){
-            cout << margen << matriz[i][j] << " ";
-        }
-        cout << margen << i +1 << endl;
+        cout << "  " <<YELLOW<< l +1  << " ";
     }
 
+    cout <<WHITE<< endl;
+
+    for(int i=0; i<8; i++){
+        cout<<"\t\t";
+        for(int l=0; l<8; l++){
+            cout << margen2;
+        }
+        cout << endl<<"\t\t";
+        for(int j=0; j<8; j++){
+            if(matriz[i][j]=='X'){
+                cout << margen <<RED<< matriz[i][j] <<WHITE<< " ";
+            }else{
+                cout << margen <<BLUE<< matriz[i][j] <<WHITE<< " ";
+            }
+        }
+        cout <<WHITE<< margen <<GREEN<< i +1 <<WHITE<< endl;
+    }
+
+    cout<<"\t\t";
     for(int l=0; l<8; l++){
         cout << margen2;
     }
@@ -99,14 +105,19 @@ bool tablero::MovimientoValido(int x, int y, char ficha)
         if(matriz[x - 1][y - 1] != ' ' && matriz[x - 1][y - 1] != ficha){
             int b = x - 2;
             for(int a = y - 2; a >= 0 ; a--){
-                if(matriz[b][a] == ' '){
+                if(b >= 0){
+                    if(matriz[b][a] == ' '){
+                        break;
+                    }
+                    else if(matriz[b][a] == ficha){
+                        direccionValida[4] = true;
+                        break;
+                    }
+                    b--;
+                }
+                else{
                     break;
                 }
-                else if(matriz[b][a] == ficha){
-                    direccionValida[4] = true;
-                    break;
-                }
-                b--;
             }
         }
     }
@@ -144,16 +155,21 @@ bool tablero::MovimientoValido(int x, int y, char ficha)
     if((x < 6) && (y < 6)){
         //diagonal inferior derecha
         if(matriz[x + 1][y + 1] != ' ' && matriz[x + 1][y + 1] != ficha){
-            int b = x + 2;
-            for(int a = y + 2; a < 8; a++){
-                if(matriz[b][a] == ' '){
+            int b = y + 2;
+            for(int a = x + 2; a < 8; a++){
+                if(b < 8){
+                    if(matriz[a][b] == ' '){
+                        break;
+                    }
+                    else if(matriz[a][b] == ficha){
+                        direccionValida[7] = true;
+                        break;
+                    }
+                    b++;
+                }
+                else{
                     break;
                 }
-                else if(matriz[b][a] == ficha){
-                    direccionValida[7] = true;
-                    break;
-                }
-                b++;
             }
         }
     }
@@ -161,16 +177,21 @@ bool tablero::MovimientoValido(int x, int y, char ficha)
     if((x > 1) && (y < 6)){
         //diagonal superior derecha
         if(matriz[x - 1][y + 1] != ' ' && matriz[x - 1][y + 1] != ficha){
-            int b = x - 2;
-            for(int a = y + 2; a < 8; a++){
-                if(matriz[b][a] == ' '){
+            int b = y + 2;
+            for(int a = x - 2; a >= 0; a--){
+                if(b < 8){
+                    if(matriz[a][b] == ' '){
+                        break;
+                    }
+                    else if(matriz[a][b] == ficha){
+                        direccionValida[5] = true;
+                        break;
+                    }
+                    b++;
+                }
+                else{
                     break;
                 }
-                else if(matriz[b][a] == ficha){
-                    direccionValida[5] = true;
-                    break;
-                }
-                b--;
             }
         }
     }
@@ -180,14 +201,19 @@ bool tablero::MovimientoValido(int x, int y, char ficha)
         if(matriz[x + 1][y - 1] != ' ' && matriz[x + 1][y - 1] != ficha){
             int b = x + 2;
             for(int a = y - 2; a >= 0 ; a--){
-                if(matriz[b][a] == ' '){
+                if(b < 8){
+                    if(matriz[b][a] == ' '){
+                        break;
+                    }
+                    else if(matriz[b][a] == ficha){
+                        direccionValida[6] = true;
+                        break;
+                    }
+                    b++;
+                }
+                else{
                     break;
                 }
-                else if(matriz[b][a] == ficha){
-                    direccionValida[6] = true;
-                    break;
-                }
-                b++;
             }
         }
     }
@@ -352,14 +378,14 @@ bool tablero::Movimiento(char ficha)
             matriz[fila-1][columna-1]=ficha;
             ActualizarTablero(fila-1, columna-1, ficha);
         }else{
-            cout<<"Este movimiento es invalido"<<endl;
+            cout<<"\tEste movimiento es invalido"<<endl;
             return true;
         }
         ContarFichas();
         imprimirTablero();
         return false;
     }else{
-        cout<<"Esta casilla está ocupada, ingrese una nueva coordenada"<<endl;
+        cout<<"\tEsta casilla esta ocupada, ingrese una nueva coordenada"<<endl;
         return true;
     }
 
@@ -383,19 +409,23 @@ void tablero::ContarFichas(){
 
 void tablero::Resultado(string jugadorX, string jugadorO){
 
+    #define BLUE    "\033[34m"
+    #define RED     "\033[31m"
+    #define WHITE   "\033[37m"
+
     if(puntacion[0]>puntacion[1]){
-        cout<<"Felicidades" << jugadorX<<"! GANASTE!"<<endl;
+        cout<<"\n\n\t\tFelicidades " << jugadorX<<"! GANASTE!"<<endl;
         GuardarPartida(jugadorX, puntacion[0]);
     }else if(puntacion[0]< puntacion[1]){
-        cout<<"Felicidades"<<jugadorO<<"! GANASTE!"<<endl;
+        cout<<"\n\n\t\tFelicidades "<<jugadorO<<"! GANASTE!"<<endl;
         GuardarPartida(jugadorO, puntacion[1]);
     }else{
-        cout<<"EMPATE!"<<endl;
+        cout<<"\n\n\t\tEMPATE!"<<endl;
         GuardarPartida(puntacion[0]);
     }
-    cout<<"Puntacion: "<<endl;
-    cout<<"X:" <<puntacion[0]<<endl;
-    cout<<"0: "<<puntacion[1]<<endl;
+    cout<<"\n\n\t\tPuntacion: "<<endl;
+    cout<<RED<<"\t\tX:"<< WHITE<<puntacion[0]<<endl;
+    cout<<BLUE<<"\t\tO: "<<WHITE<<puntacion[1]<<endl;
 
 
     //Esta funcion llama a contar fichas e imprime quién ganó y la cantidad de fichas
@@ -409,8 +439,8 @@ void tablero::actualizarDirecciones(){
 }
 
 tablero::~tablero(){
-   /* for(int i=0; i<8;i++){
+    for(int i=0; i<8;i++){
         delete matriz[i];
     }
-    delete[] matriz;*/
+    delete[] matriz;
 }

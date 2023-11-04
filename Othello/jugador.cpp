@@ -17,6 +17,6 @@ string jugador::getNombre() const
 
 jugador::jugador()
 {
-    cout<<"Ingrese su nombre: "; cin>> nombre;
+    #define WHITE   "\033[37m"
+    cout<<"\tIngrese su nombre: "<<WHITE; cin>> nombre;
 }
-

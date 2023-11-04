@@ -2,3 +2,9 @@ OTHELLO
 
 Fecha y hora: 2023-11-3 23:17:28
 El ganador fue Davidsito con 34 fichas
+Fecha y hora: 2023-11-3 23:41:31
+Hubo un empate con 0 fichas
+Fecha y hora: 2023-11-4 16:9:48
+El ganador fue Davidsito con 42 fichas
+Fecha y hora: 2023-11-4 16:19:24
+El ganador fue David con 49 fichas

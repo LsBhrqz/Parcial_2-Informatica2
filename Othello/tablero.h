@@ -5,8 +5,8 @@
 class tablero{
 private:
     int puntacion[2]= {0,0};
-    char matriz[8][8];
-    //char** matriz= new char*[8];
+    //char matriz[8][8];
+    char** matriz= new char*[8];
     bool direccionValida[8];
 public:
     tablero();

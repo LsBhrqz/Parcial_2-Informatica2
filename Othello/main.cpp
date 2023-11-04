@@ -8,7 +8,7 @@ int main()
     while(ban_inicio){
         ban_inicio= juego();
     }
-    cout<<"Que lastima que te vayas"<<endl;
-    cout<<"Vuelve pronto!"<<endl;
+    cout<<"\nQue lastima que te vayas"<<endl;
+    cout<<"Vuelve pronto!\n"<<endl;
     return 0;
 }

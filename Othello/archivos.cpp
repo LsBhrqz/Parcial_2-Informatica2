@@ -117,16 +117,17 @@ bool menu()
  * Retorna: true o false: bool
 */
 #define GREEN   "\033[32m"
-    string othello= "Othello.txt";
+#define WHITE   "\033[37m"
+    string othello= "Othelo.txt";
     bool bandera_titulo = intro(othello);
     int eleccion_menu=0;
     if (bandera_titulo) {
         bool segunda_ban= true;
         while(segunda_ban){
-            cout <<GREEN<< "\nBienvenido a Othello!\n" << endl;
-            cout << "1. Jugar en modo multijugador" << endl;
-            cout << "2. Salir del sistema" << endl;
-            cout << "Seleccione la opcion que desea: ";
+            cout <<GREEN<< "\n\tBienvenido a Othello!\n" << endl;
+            cout << "\t1. Jugar en modo multijugador" << endl;
+            cout << "\t2. Salir del sistema" << endl;
+            cout << "\tSeleccione la opcion que desea: "<<WHITE;
             try {
                 if (!(cin >> eleccion_menu)) {
                     throw 1;
@@ -142,9 +143,9 @@ bool menu()
                 }
             } catch (int error) {
                 if (error == 1) {
-                    cout << "Ingresate una opcion invalida. Solo puede ingresar numeros\n";
+                    cout << "\tIngresate una opcion invalida. Solo puede ingresar numeros\n";
                 } else if (error == 2) {
-                    cout << "Seleccione 1 o 2 para ingresar" << endl;
+                    cout << "\tSolo puede seleccionar 1 o 2" << endl;
 
                 }
                 cin.clear();
