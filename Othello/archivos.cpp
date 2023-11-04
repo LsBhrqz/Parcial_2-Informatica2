@@ -1,9 +1,8 @@
 #include "archivos.h"
-#include <ctime>
 
 void ImprimirNombre(string nombre_archivo)
 {
-    /* Esta funcion recibo el nombre de un archivo e imprime linea por linea lo que hay en él de color amarillo
+/* Esta funcion recibo el nombre de un archivo e imprime linea por linea lo que hay en él de color amarillo
  * Parametros: archivo : string
  * Retorna: void;
 */
@@ -23,7 +22,7 @@ void ImprimirNombre(string nombre_archivo)
 
 bool comprobarLectura( string nombredelarchivo)
 {
-    /* Verifica si el archivo existe en caso de que lo haga retorna true y si no lo hace retorna false
+/* Verifica si el archivo existe en caso de que lo haga retorna true y si no lo hace retorna false
  * Parametros: nombredelarchivo:string
  * Retorna: true or false: bool
 */
@@ -40,9 +39,12 @@ bool comprobarLectura( string nombredelarchivo)
 
 void CambiarNombreArchivo(string& nombre_archivo)
 {
-/* Aun no estoy segura si se va a usar
+/* Reemplaza el string que recibe por referencia por el nuevo que le ingresaron.
+ * En este caso es el nombre de un arhivo por lo que le agrega el .txt
+ * Parametros: nombre_archivo:&string
+ * Retorna: void
 */
-    cout<<"Ingrese el nombre del nuevo archivo: ";
+    cout<<"Ingrese el nombre del archivo que desea abrir: ";
     string nombre_nuevo_archivo; cin>> nombre_nuevo_archivo;
     nombre_nuevo_archivo+= ".txt";
     nombre_archivo= nombre_nuevo_archivo;
@@ -50,6 +52,11 @@ void CambiarNombreArchivo(string& nombre_archivo)
 
 bool RespuestaValida(string respuesta)
 {
+ /* Verifica que el string que recibe sea de tamaño 1 e igual a la n o a la s.
+ * En caso de serlo retorna true, si no lo es retorna false
+ * Parametros: respuesta:&string
+ * Retorna: true o false: bool
+*/
     if(respuesta.length()>1){
         cout<<"Solo puede ingresar una letra (s/n)"<<endl;
         return false;
@@ -65,6 +72,15 @@ bool RespuestaValida(string respuesta)
 
 bool intro(string& othello)
 {
+/* Llama a una función para verificar que esté el archivo en caso de no estarlo despliega
+ * un menu que le pregunta al usario si desea salirse del programa, si no quiere salirse
+ * le da la opción de ingresar otro nombre para buscar ese archivo. En caso de que sí encuentre el
+ * archivo llama a una función para que imprima el nombre. Si desea seguir en el programa
+ * retorna true en caso contrario retorna false.
+ * En este caso es el nombre de un arhivo por lo que le agrega el .txt
+ * Parametros: nombre_archivo:&othello
+ * Retorna: bandera_titulo: bool
+*/
     bool bandera_titulo= false;
     bool ban=true;
     string respuesta="";
@@ -80,7 +96,7 @@ bool intro(string& othello)
                 cin >> respuesta;
                 bool ban_interna= RespuestaValida(respuesta);
                 if(ban_interna){
-                    if(respuesta=="s"){
+                    if(respuesta=="s"){  
                         return bandera_titulo;
                     }else{
                         controlban=false;
@@ -95,8 +111,13 @@ bool intro(string& othello)
 
 bool menu()
 {
+/* Llama a una función que imprime la presentación y de paso verifica si el usaurio
+ * En este caso es el nombre de un arhivo por lo que le agrega el .txt
+ * Parametros: void
+ * Retorna: true o false: bool
+*/
 #define GREEN   "\033[32m"
-    string othello= "Othelo.txt";
+    string othello= "Othello.txt";
     bool bandera_titulo = intro(othello);
     int eleccion_menu=0;
     if (bandera_titulo) {
@@ -181,7 +202,7 @@ bool VerificarArchivo(string& nombreArchivo){
                     }
                 }
             }
-            CrerArchivoHistorial(nombreArchivo);
+            CrearArchivoHistorial(nombreArchivo);
         }
     }
     return bandera_titulo;
@@ -189,7 +210,7 @@ bool VerificarArchivo(string& nombreArchivo){
 
 void GuardarPartida(string nombre_jugador, int num_fichas){
     string historial= "Historial.txt";
-    bool ban=VerficarArchivo(historial);
+    bool ban=VerificarArchivo(historial);
     if(ban){
         ofstream archivo;
         archivo.open(historial, ios::app);
@@ -197,12 +218,11 @@ void GuardarPartida(string nombre_jugador, int num_fichas){
         archivo<<"El ganador fue "<<nombre_jugador<<" con "<<num_fichas<< " fichas"<<endl;
         archivo.close();
     }
-    return ban;
 }
 
 void GuardarPartida(int num_fichas){
     string historial= "Historial.txt";
-    bool ban=VerficarArchivo(historial);
+    bool ban=VerificarArchivo(historial);
     if(ban){
         ofstream archivo;
         archivo.open(historial, ios::app);
@@ -210,5 +230,4 @@ void GuardarPartida(int num_fichas){
         archivo<<"Hubo un empate con "<<num_fichas<< " fichas"<<endl;
         archivo.close();
     }
-    return ban;
 }

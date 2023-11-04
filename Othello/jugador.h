@@ -1,7 +1,6 @@
 #ifndef JUGADOR_H
 #define JUGADOR_H
-#include <archivos.h>
-
+#include "archivos.h"
 
 class jugador{
 private:

@@ -22,7 +22,7 @@ string SacarFechayHora();
 
 void CrearArchivoHistorial();
 
-bool VerificarArchivo(string nombreArchivo);
+bool VerificarArchivo(string &nombreArchivo);
 
 void GuardarPartida(string nombre_jugador1, int num_fichas_1);
 

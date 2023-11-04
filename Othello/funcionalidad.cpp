@@ -1,6 +1,4 @@
 #include "funcionalidad.h"
-#include "tablero.h"
-#include "jugador.h"
 
 using namespace std;
 bool esNumero(string str)
@@ -57,8 +55,10 @@ bool juego()
     bool validar_continuacion=true;
     bool posible_movimientoX=false;
     bool posible_movimientoO=false;
+    Tablero.ContarFichas();
+    Tablero.imprimirTablero();
     while(validar_continuacion){
-        validar_continuacion= Tablero.EstadoTablero();
+        //validar_continuacion= Tablero.EstadoTablero();
         posible_movimientoX= Tablero.PosibleMovimiento(jugadorX.getFicha());
         posible_movimientoO= Tablero.PosibleMovimiento(jugadorO.getFicha());
         if(posible_movimientoO==false && posible_movimientoX==false){
@@ -66,36 +66,36 @@ bool juego()
             validar_continuacion=false;
         }else if(validar_continuacion){
             if(!posible_movimientoX){
-                cout<<"No tienes posibles movimientos"<<endl;
+                cout<<jugadorX.getNombre()<<" no tienes posibles movimientos"<<endl;
             }else{
                 while(posible_movimientoX){
-                    int fila= RecibirRespuesta("fila");
-                    int columna= RecibirRespuesta("columna");
-                    Tablero.MovimientoValido(fila, columna, jugadorX.getFicha());
-                    Tablero.ActualizarTablero(fila, columna, jugadorX.getFicha());
-                    Tablero.imprimirTablero();
+                    cout<<"Turno de "<<jugadorX.getNombre()<<endl;
+                    posible_movimientoX=Tablero.Movimiento(jugadorX.getFicha());
                 }
             }
             validar_continuacion= Tablero.EstadoTablero();
+            posible_movimientoO= Tablero.PosibleMovimiento(jugadorO.getFicha());
             if(validar_continuacion){
                 if(!posible_movimientoO){
-                    cout<<"No tienes posibles movimientos"<<endl;
+                    cout<<jugadorO.getNombre()<<" no tienes posibles movimientos"<<endl;
                 }else{
                     while(posible_movimientoO){
-                        int fila= RecibirRespuesta("fila");
-                        int columna= RecibirRespuesta("columna");
-                        Tablero.MovimientoValido(fila, columna, jugadorO.getFicha());
-                        Tablero.ActualizarTablero(fila, columna, jugadorO.getFicha());
-                        Tablero.imprimirTablero();
+                        cout<<"Turno de "<<jugadorO.getNombre()<<endl;
+                        posible_movimientoO= Tablero.Movimiento(jugadorO.getFicha());
                     }
                 }
                 validar_continuacion= Tablero.EstadoTablero();
             }
         }
     }
+    Tablero.ContarFichas();
     Tablero.Resultado(jugadorX.getNombre(), jugadorO.getNombre());
-    //Tablero.ContarFichas(); Esta función se debe estra llamando en la partida para que se vea
-    //quién está ganando o perdiendo
 
-    return false;
+    cout<<"Desea jugar de nuevo? s(si)/n(no): ";cin>>validar_continuacion;
+    if(validar_continuacion){
+        return true;
+    }else{
+        return false;
+    }
+
 }

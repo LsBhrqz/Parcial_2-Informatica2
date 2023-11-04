@@ -1,5 +1,4 @@
 #include "jugador.h"
-#include "tablero.h"
 
 void jugador::setFicha(char nueva_ficha)
 {
@@ -11,7 +10,7 @@ char jugador::getFicha() const
     return ficha;
 }
 
-std::string jugador::getNombre() const
+string jugador::getNombre() const
 {
     return nombre;
 }
