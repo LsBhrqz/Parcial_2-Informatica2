@@ -3,9 +3,31 @@
 using namespace std;
 bool esNumero(string str)
 {
-    for(char c : str){
-        if((c < '1') || (c > '8')){
-            return false;
+    if(str.length()>1){
+        cout<<"\tSolo puedes ingresar numeros entre el 1 y el 8"<<endl;
+        return false;
+    }else{
+        for(char c : str){
+            if((c < '1') || (c > '8')){
+                cout<<"Solo puedes ingresar numeros entre el 1 y el 8"<<endl;
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
+bool letraValida(string str)
+{
+    if(str.length()>1){
+        cout<<"\tSolo puedes ingresar una letra"<<endl;
+        return false;
+    }else{
+        for(char c : str){
+            if((c < 'A') || (c > 'H')){
+                cout<<"\tSolo puedes ingresar letras entre la A y la H (mayusculas)"<<endl;
+                return false;
+            }
         }
     }
     return true;
@@ -20,6 +42,7 @@ int RecibirRespuesta(string dato)
     string entrada;
     bool entradaValida = false;
     int numero = 0;
+    char caracter;
 
     while(!entradaValida){
         if(dato=="fila"){
@@ -29,25 +52,22 @@ int RecibirRespuesta(string dato)
         }
         cin >> entrada;
 
-        entradaValida = esNumero(entrada);
-
-        if(entradaValida){
-            numero = 0;
-            for (char c : entrada){
-                numero = numero * 10 + (c - '0');
+        if(dato=="fila"){
+            entradaValida = esNumero(entrada);
+            if(entradaValida){
+                caracter = entrada[0];
+                numero= caracter-48;
+                return numero;
             }
-
-            if(numero < 1){
-                entradaValida = false;
+        }else{
+            entradaValida= letraValida(entrada);
+            if(entradaValida){
+                caracter = entrada[0];
+                numero= caracter-64;
+                return numero;
             }
         }
-
-        if(!entradaValida){
-            cout << "\tEntrada invalida. Por favor, ingrese solo numeros entre el 1 y el 8" << endl;
-        }
-    }
-
-    return numero;
+    }   
 }
 
 bool juego()

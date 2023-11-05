@@ -37,8 +37,9 @@ void tablero::imprimirTablero()
     cout<<RED<<"\n\t\t   X's: "<<WHITE<<puntacion[0]<<"\t\t"<<BLUE<<"O's: "<<WHITE<<puntacion[1]<<endl;
 
     cout<<"\n\t\t";
-    for(int l=0; l<8; l++){
-        cout << "  " <<YELLOW<< l +1  << " ";
+    for(int l=64; l<72; l++){
+        char letra= l+1;
+        cout << "  " <<YELLOW<< letra  << " ";
     }
 
     cout <<WHITE<< endl;

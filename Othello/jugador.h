@@ -2,17 +2,16 @@
 #define JUGADOR_H
 #include "archivos.h"
 
-class jugador{
+class jugador{   
 private:
     string nombre;
-    char ficha;
-
+    char ficha;   
 public:
     jugador();
     void setFicha(char nueva_ficha);
     char getFicha() const;
-
     string getNombre() const;
+
 };
 
 #endif // JUGADOR_H

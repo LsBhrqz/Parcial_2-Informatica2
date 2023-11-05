@@ -3,7 +3,7 @@
 void ImprimirNombre(string nombre_archivo)
 {
 /* Esta funcion recibo el nombre de un archivo e imprime linea por linea lo que hay en él de color amarillo
- * Parametros: archivo : string
+ * Parametros: string :: archivo
  * Retorna: void;
 */
 #define YELLOW  "\033[33m"
@@ -24,7 +24,7 @@ bool comprobarLectura( string nombredelarchivo)
 {
 /* Verifica si el archivo existe en caso de que lo haga retorna true y si no lo hace retorna false
  * Parametros: nombredelarchivo:string
- * Retorna: true or false: bool
+ * Retorna: bool:: true or false
 */
     ifstream archivo;
     archivo.open(nombredelarchivo);
@@ -41,7 +41,7 @@ void CambiarNombreArchivo(string& nombre_archivo)
 {
 /* Reemplaza el string que recibe por referencia por el nuevo que le ingresaron.
  * En este caso es el nombre de un arhivo por lo que le agrega el .txt
- * Parametros: nombre_archivo:&string
+ * Parametros: &string :: nombre_archivo
  * Retorna: void
 */
     cout<<"Ingrese el nombre del archivo que desea abrir: ";
@@ -54,8 +54,8 @@ bool RespuestaValida(string respuesta)
 {
  /* Verifica que el string que recibe sea de tamaño 1 e igual a la n o a la s.
  * En caso de serlo retorna true, si no lo es retorna false
- * Parametros: respuesta:&string
- * Retorna: true o false: bool
+ * Parametros: &string:: respuesta
+ * Retorna: bool :: true o false
 */
     if(respuesta.length()>1){
         cout<<"Solo puede ingresar una letra (s/n)"<<endl;
@@ -77,9 +77,8 @@ bool intro(string& othello)
  * le da la opción de ingresar otro nombre para buscar ese archivo. En caso de que sí encuentre el
  * archivo llama a una función para que imprima el nombre. Si desea seguir en el programa
  * retorna true en caso contrario retorna false.
- * En este caso es el nombre de un arhivo por lo que le agrega el .txt
- * Parametros: nombre_archivo:&othello
- * Retorna: bandera_titulo: bool
+ * Parametros: &othello :: nombre_archivo
+ * Retorna: bool :: bandera_titulo
 */
     bool bandera_titulo= false;
     bool ban=true;
@@ -111,10 +110,11 @@ bool intro(string& othello)
 
 bool menu()
 {
-/* Llama a una función que imprime la presentación y de paso verifica si el usaurio
- * En este caso es el nombre de un arhivo por lo que le agrega el .txt
+/* Llama a una función que imprime la presentación y en caso de poder hacerlo despliega el
+ * menu principal del juego, en caso de que quiera jugar retorna true, si quiere salir del sistema
+ * retorna false
  * Parametros: void
- * Retorna: true o false: bool
+ * Retorna: bool :: true o false
 */
 #define GREEN   "\033[32m"
 #define WHITE   "\033[37m"
@@ -158,14 +158,24 @@ bool menu()
 }
 
 string SacarFechayHora(){
-    // Obtener el tiempo actual en segundos desde el Epoch (1 de enero de 1970)
-    time_t tiempo = time(&tiempo);
+/*En el momento en que se invoque la función ella invoca la función time para obtener el timepo
+ * en ese momento en segundos(es el tiempo transcurrido desde el Epoch (1 de enero de 1970)
+ * hasta ese momento), despupes invoca a la fucnión localtime para que convierta esa información
+ * en componentes de tiempo. Para guadar la información agrupo la información como un string
+ * que finalmente es lo que retorna la función
+ * Parametros: void
+ * Retorna: string :: fechayhora
+*/
+    time_t tiempo = time(&tiempo); //time_t es un tipo de variable que representa
+    // mediciones de tiempo, normalmente se trata como un entero
 
-    // Convertir el tiempo a una estructura tm para obtener la hora y fecha
+    // tm en cambia es una estructura de datos (parecido a una clase pero sus atributos
+   // son públicos por defecto) que permite deglosar en "unidades" el tiempo que se
+    //obtuvo en la variable tipo time_t
     tm* fecha_hora = localtime(&tiempo);
 
     string fechayhora= "Fecha y hora: ";
-    fechayhora+= to_string(fecha_hora->tm_year +1900) +"-";
+    fechayhora+= to_string(fecha_hora->tm_year +1900) +"-"; //le suma 1900 porque mide el tiempo desde ese año
     fechayhora+= to_string(fecha_hora->tm_mon + 1)+"-" + to_string(fecha_hora->tm_mday)+" ";
     fechayhora+= to_string(fecha_hora->tm_hour)+":" + to_string(fecha_hora->tm_min)+":";
     fechayhora+= to_string(fecha_hora->tm_sec);
@@ -174,6 +184,12 @@ string SacarFechayHora(){
 }
 
 void CrearArchivoHistorial(string& nombre_archivo){
+/* Esta función llama a tra función para que modifique un string que es el nombre del archivo
+ * donde se guardan las partidas, abre el archivo en caso de que exista y si no existe lo crea
+ * le coloca el título ("OTHELLO") y finalmente lo cierra
+ * Parametro: string& :: nombre_archivo
+ * Retorna: void
+*/
     CambiarNombreArchivo(nombre_archivo);
     ofstream archivo;
     archivo.open(nombre_archivo);
@@ -182,6 +198,11 @@ void CrearArchivoHistorial(string& nombre_archivo){
 }
 
 bool VerificarArchivo(string& nombreArchivo){
+/* Verifica que un archivo exista, en caso de que no exista le pregunta al usuario si quiere
+ * salir del programa, si no quiere hacerlo crea el archivo
+ * Parametro: string& :: nombreArchivo
+ * Retorna: bool :: bandera_titulo
+*/
     bool bandera_titulo= false;
     bool ban=true;
     string respuesta="";
@@ -210,6 +231,11 @@ bool VerificarArchivo(string& nombreArchivo){
 }
 
 void GuardarPartida(string nombre_jugador, int num_fichas){
+/* Esta función llama a otra para verificar si se sencuentra el archivo, en caso de que lo haga
+ * Guardo el nombre del jugador que ganó con la cantidad de fichas, la fecha y la hora
+ * Parametros: string :: nombre_jugador, int :: num_fichas
+ * Retorna: void
+*/
     string historial= "Historial.txt";
     bool ban=VerificarArchivo(historial);
     if(ban){
@@ -222,6 +248,12 @@ void GuardarPartida(string nombre_jugador, int num_fichas){
 }
 
 void GuardarPartida(int num_fichas){
+/* esta es una versión sobrecargada de GuardarPartida, la diferencia es que esta función solo
+ * recibe un número entero porque se llama cuando ha ocurrido un empate
+ * Parametro: int :: num_fichas
+ * Retorna: void
+*/
+
     string historial= "Historial.txt";
     bool ban=VerificarArchivo(historial);
     if(ban){
