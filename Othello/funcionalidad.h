@@ -4,6 +4,7 @@
 #include "jugador.h"
 bool esNumero(string str);
 int RecibirRespuesta(string dato);
+bool letraValida(string str);
 bool juego();
 
 #endif // FUNCIONALIDAD_H

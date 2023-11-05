@@ -44,7 +44,7 @@ bool letraValida(string str)
 int RecibirRespuesta(string dato)
 {
  /* Recibe un string que definirá si le pide una fila o una columna, dependiendo del caso
-  * lo imprime el mensaje de cierto color y retorna el valor númerico que le corresponde al
+  * lo imprime el mensaje de cierto color y retorna el valor numérico que le corresponde al
   * tablero desde el 1 al 8
  * Parametro: string :: dato
  * Retorna: int :: numero
