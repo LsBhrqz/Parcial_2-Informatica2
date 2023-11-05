@@ -3,8 +3,8 @@
 void ImprimirNombre(string nombre_archivo)
 {
 /* Esta funcion recibo el nombre de un archivo e imprime linea por linea lo que hay en él de color amarillo
- * Parametros: string :: archivo
- * Retorna: void;
+ * Parametros: string :: nombre_archivo
+ * Retorna: void
 */
 #define YELLOW  "\033[33m"
 #define RESET   "\033[0m"
@@ -23,7 +23,7 @@ void ImprimirNombre(string nombre_archivo)
 bool comprobarLectura( string nombredelarchivo)
 {
 /* Verifica si el archivo existe en caso de que lo haga retorna true y si no lo hace retorna false
- * Parametros: nombredelarchivo:string
+ * Parametros: string :: nombredelarchivo
  * Retorna: bool:: true or false
 */
     ifstream archivo;
@@ -77,7 +77,7 @@ bool intro(string& othello)
  * le da la opción de ingresar otro nombre para buscar ese archivo. En caso de que sí encuentre el
  * archivo llama a una función para que imprima el nombre. Si desea seguir en el programa
  * retorna true en caso contrario retorna false.
- * Parametros: &othello :: nombre_archivo
+ * Parametros: string& :: othello
  * Retorna: bool :: bandera_titulo
 */
     bool bandera_titulo= false;
@@ -248,12 +248,11 @@ void GuardarPartida(string nombre_jugador, int num_fichas){
 }
 
 void GuardarPartida(int num_fichas){
-/* esta es una versión sobrecargada de GuardarPartida, la diferencia es que esta función solo
+/* Esta es una versión sobrecargada de GuardarPartida, la diferencia es que esta función solo
  * recibe un número entero porque se llama cuando ha ocurrido un empate
  * Parametro: int :: num_fichas
  * Retorna: void
 */
-
     string historial= "Historial.txt";
     bool ban=VerificarArchivo(historial);
     if(ban){

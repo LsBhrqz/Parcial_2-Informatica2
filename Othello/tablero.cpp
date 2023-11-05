@@ -2,7 +2,11 @@
 
 tablero::tablero()
 {
-    //char* puntero_arreglo = new char[8];
+/*Este es el constructor de los objetos de la clase Tablero, que inicializa
+ *la matriz dinámica con espacios en blanco y las cuatro fichas centrales iniciales
+Parámetros: none
+Retorno: void
+*/
 
     for(int i=0; i<8; i++){
         matriz[i]= new char[8];
@@ -12,18 +16,17 @@ tablero::tablero()
             matriz[i][j]= ' ';
         }
     }
-    /*for(int i=0; i<8;i++){
-        for(int j=0; j<8; j++){
-            matriz[i][j]= ' ';
-        }
-    }
-*/
+
     matriz[3][3]='O'; matriz[4][4]='O';
     matriz[3][4]= 'X'; matriz[4][3]= 'X';
 }
 
 void tablero::imprimirTablero()
 {
+/* Esta función recorre los valores que hay en la matriz dentro de unos margenes prestablecidos
+ * Parametro: void
+ * Retorna: void
+*/
     #define RED     "\033[31m"
     #define WHITE   "\033[37m"
     #define BLUE    "\033[34m"
@@ -69,6 +72,14 @@ void tablero::imprimirTablero()
 
 bool tablero::MovimientoValido(int x, int y, char ficha)
 {
+/*Esta función se encarga de evaluar si la ficha ingresada en la posición indicada
+es un movimiento válido en al menos una de todas las direcciones posibles, y guarda
+valores booleanos en un arreglo que indica si alguna de esas direcciones es válida.En caso
+de que la jugadano posea ninguna dirección posible, la función retorna false,pero si
+tiene alguna posible, retorna true, y el arreglo de los booleanos se altera internamente
+Parámetros: int :: x, int :: y, char :: ficha
+Retornos: bool movimientovalido
+*/
     actualizarDirecciones();
 
     if(y > 1){
@@ -229,6 +240,10 @@ bool tablero::MovimientoValido(int x, int y, char ficha)
 
 bool tablero::PosibleMovimiento(char ficha)
 {
+/* Esta función que verifica la ficha del parámetro tenga al menos un movimiento válido en el tablero
+ * Parametro: char :: ficha
+ * Retorna: bool :: posibilidad
+*/
     bool posibilidad=false;
     for(int i=0; i<8; i++){
         for (int j = 0; j < 8; j++) {
@@ -243,11 +258,22 @@ bool tablero::PosibleMovimiento(char ficha)
     return posibilidad;
 }
 
-int tablero::GetPuntacion( int indice) const{
+int tablero::GetPuntacion( int indice) const
+{
+/* Esta función retorna una posición que soliciten del arreglo puntación que es un atributo de la
+ * clase tablero
+ * Parametro: int :: indice
+ * Retorna: int :: puntacion[indice]
+*/
     return puntacion[indice];
 }
 
-bool tablero::CasillaVacia(int i, int j){
+bool tablero::CasillaVacia(int i, int j)
+{
+/* Esta función verifica si la casilla en los indices que solicitaron de la matriz está vacía
+ * Parametros: int :: i, j
+ * Retorna: bool :: true o false
+*/
     if(matriz[i][j]==' '){
         return true;
     }else{
@@ -255,7 +281,14 @@ bool tablero::CasillaVacia(int i, int j){
     }
 }
 
-void tablero::ActualizarTablero(int x, int y, char ficha){
+void tablero::ActualizarTablero(int x, int y, char ficha)
+{
+/*Esta función se encarga de cambiar las fichas en las direcciones que la función MovimientoValido
+ha verificado válidas, accediendo internamente al arreglo de booleanos para determinar hacia dónde
+cambiar las fichas
+Parámetros: int :: x, y; char :: ficha
+Retorno: ninguno
+*/
     int a=0,b=0;
     //izquierda
     a = y - 1;
@@ -355,7 +388,13 @@ void tablero::ActualizarTablero(int x, int y, char ficha){
     }
 }
 
-bool tablero::EstadoTablero(){
+bool tablero::EstadoTablero()
+{
+/* Esta función verifica que haya al menos un espacio en blanco en la matriz, en caso de
+ * hacerlo retorna true, en caso contrario retorna false
+ * Parametro: void
+ * Retorna: bool :: true o false
+*/
     for(int i=0; i<8; i++){
         for(int j=0; j<8; j++){
             if(matriz[i][j]== ' '){
@@ -368,8 +407,13 @@ bool tablero::EstadoTablero(){
 
 bool tablero::Movimiento(char ficha)
 {
+/* Esta función verifica que casilla en las coordenadas que ingresaron tenga movimientos válidos
+ * en caso de hacerlo cuenta las fichas y actualiza el tablero e imprime la matriz,
+ * si no es válido pide una nueva coordenada
+ * Parametro: char :: ficha
+ * Retorna: bool :: true o false
+*/
     bool verificar_celda=false;
-    //Funcion que no está implementada y todavía no estoy segura de si la voy a usar
     int fila= RecibirRespuesta("fila");
     int columna= RecibirRespuesta("columna");
     verificar_celda=CasillaVacia(fila-1, columna-1);
@@ -392,7 +436,13 @@ bool tablero::Movimiento(char ficha)
 
 }
 
-void tablero::ContarFichas(){
+void tablero::ContarFichas()
+{
+/* Recorre la matriz y cuenta cuantos caractes de las X's y las O's hay en ella,
+ * luego actualiza los valores del arreglo puntacion que es un atributo de la clase tablero
+ * Parametro: void
+ * Retorna: void
+*/
     int contadorX=0;
     int contadorO=0;
     for (int i = 0; i < 8; i++) {
@@ -408,7 +458,12 @@ void tablero::ContarFichas(){
     puntacion[1]= contadorO;
 }
 
-void tablero::Resultado(string jugadorX, string jugadorO){
+void tablero::Resultado(string jugadorX, string jugadorO)
+{
+/* Esta función imprime el nombre del jugador que ganó en pantalla y la puntación de la partida
+ * Parametro: string :: jugadorX, jugadorO
+ * Retorna: void
+*/
 
     #define BLUE    "\033[34m"
     #define RED     "\033[31m"
@@ -425,21 +480,33 @@ void tablero::Resultado(string jugadorX, string jugadorO){
         GuardarPartida(puntacion[0]);
     }
     cout<<"\n\n\t\tPuntacion: "<<endl;
-    cout<<RED<<"\t\tX:"<< WHITE<<puntacion[0]<<endl;
-    cout<<BLUE<<"\t\tO: "<<WHITE<<puntacion[1]<<endl;
+    cout<<RED<<"\t\tX's:"<< WHITE<<puntacion[0]<<endl;
+    cout<<BLUE<<"\t\tO's: "<<WHITE<<puntacion[1]<<endl;
 
 
     //Esta funcion llama a contar fichas e imprime quién ganó y la cantidad de fichas
     //que tuvo cada uno
 }
 
-void tablero::actualizarDirecciones(){
+void tablero::actualizarDirecciones()
+{
+/* Coloca todos los valores del arreglo direccionValida como false, este arreglo es un
+ * atributo de la clase
+ * Parametro: void
+ * Retorna: void
+*/
     for(int i = 0; i<8 ; i++){
         direccionValida[i] = false;
     }
 }
 
-tablero::~tablero(){
+tablero::~tablero()
+{
+/* Además de cumplir la función normal del destructor libera la memoria dinámica que se reservó
+ * para la matriz
+ * Parametro: void
+ * Retorna: void
+*/
     for(int i=0; i<8;i++){
         delete matriz[i];
     }

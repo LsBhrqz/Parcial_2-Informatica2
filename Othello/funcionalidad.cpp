@@ -3,13 +3,17 @@
 using namespace std;
 bool esNumero(string str)
 {
+ /* Recibe un string y verifica que este sea un número entre 1 y 8 versión char
+ * Parametro: string :: str
+ * Retorna: bool :: true o false
+*/
     if(str.length()>1){
         cout<<"\tSolo puedes ingresar numeros entre el 1 y el 8"<<endl;
         return false;
     }else{
         for(char c : str){
             if((c < '1') || (c > '8')){
-                cout<<"Solo puedes ingresar numeros entre el 1 y el 8"<<endl;
+                cout<<"'\tSolo puedes ingresar numeros entre el 1 y el 8"<<endl;
                 return false;
             }
         }
@@ -19,6 +23,10 @@ bool esNumero(string str)
 
 bool letraValida(string str)
 {
+ /* Esta función verifica que ingresen una letra entre la A y la H mayusculas
+ * Parametro: string :: str
+ * Retorna: bool :: true o false
+*/
     if(str.length()>1){
         cout<<"\tSolo puedes ingresar una letra"<<endl;
         return false;
@@ -35,6 +43,12 @@ bool letraValida(string str)
 
 int RecibirRespuesta(string dato)
 {
+ /* Recibe un string que definirá si le pide una fila o una columna, dependiendo del caso
+  * lo imprime el mensaje de cierto color y retorna el valor númerico que le corresponde al
+  * tablero desde el 1 al 8
+ * Parametro: string :: dato
+ * Retorna: int :: numero
+*/
     #define WHITE   "\033[37m"
     #define GREEN   "\033[32m"
     #define YELLOW  "\033[33m"
@@ -48,7 +62,7 @@ int RecibirRespuesta(string dato)
         if(dato=="fila"){
             cout <<WHITE<< "\tIngrese el numero de la "<<GREEN<<dato<<": "<<WHITE;
         }else{
-            cout <<WHITE<< "\tIngrese el numero de la "<<YELLOW<<dato<<": "<<WHITE;
+            cout <<WHITE<< "\tIngrese la letra de la "<<YELLOW<<dato<<": "<<WHITE;
         }
         cin >> entrada;
 
@@ -72,6 +86,13 @@ int RecibirRespuesta(string dato)
 
 bool juego()
 {
+ /* Esta función se encarga de la continuidad del juego, instancia la clase tablero
+  * y jugador, intercambia los turnos de la partida, verifica si es posible hacer jugadas y cuando
+  * el juego termina invoca a la función Resultado, por último pregunta si quiere seguir jugando
+  * en caso de hacerlo retorna true, en caso contrario retorna false
+ * Parametro: void
+ * Retorna: bool :: true o false
+*/
     #define RED     "\033[31m"
     #define WHITE   "\033[37m"
     #define BLUE    "\033[34m"
